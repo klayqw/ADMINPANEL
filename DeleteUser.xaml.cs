@@ -61,22 +61,27 @@ namespace bank
 
         private void btnReg_Click(object sender, RoutedEventArgs e)
         {
-            var jsontemp = File.ReadAllText(path + "/User Base/USERBASE.json");
-            var list = JsonSerializer.Deserialize<List<User>>(jsontemp);
-
-        
-            if(list.Any(x => x.Nickname == txtUser.Text) == false)
+            try
             {
-                MessageBox.Show("no such user","delete",MessageBoxButton.OK, MessageBoxImage.Error);
-                ClearAll();
-                return;
+                var jsontemp = File.ReadAllText(path + "/User Base/USERBASE.json");
+                var list = JsonSerializer.Deserialize<List<User>>(jsontemp);
+
+
+                if (list.Any(x => x.Nickname == txtUser.Text) == false)
+                {
+                    MessageBox.Show("no such user", "delete", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ClearAll();
+                    return;
+                }
+                list.RemoveAt(list.FindIndex(x => x.Nickname == txtUser.Text));
+                var json = JsonSerializer.Serialize<List<User>>(list);
+                File.WriteAllText(path + "/User Base/USERBASE.json", json);
+                MessageBox.Show("all done", "delete", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-            list.RemoveAt(list.FindIndex(x => x.Nickname == txtUser.Text));
-            var json = JsonSerializer.Serialize<List<User>>(list);
-            File.WriteAllText(path + "/User Base/USERBASE.json", json);
-            MessageBox.Show("all done", "delete", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
-            return;
         }
 
         

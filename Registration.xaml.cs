@@ -63,12 +63,12 @@ namespace bank
 
         private void btnReg_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(path);
-            var jsontemp = File.ReadAllText(path + "/User Base/USERBASE.json");
-            var list = JsonSerializer.Deserialize<List<User>>(jsontemp);
+           
 
             try
             {
+                var jsontemp = File.ReadAllText(path + "/User Base/USERBASE.json");
+                var list = JsonSerializer.Deserialize<List<User>>(jsontemp);
                 if (issend)
                 {
                     if(txtCode.Text != code.ToString())

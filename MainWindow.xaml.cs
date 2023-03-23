@@ -77,13 +77,19 @@ namespace bank
         private void viewbase_Click(object sender, RoutedEventArgs e)
         {
             HideAll();
-            var json = File.ReadAllText(path + "/User Base/USERBASE.json");
-            var list = JsonSerializer.Deserialize<List<User>>(json);
-            foreach(var item in list)
+            try
             {
-                userlist.Items.Add(item);
+                var json = File.ReadAllText(path + "/User Base/USERBASE.json");
+                var list = JsonSerializer.Deserialize<List<User>>(json);
+                foreach (var item in list)
+                {
+                    userlist.Items.Add(item);
+                }
+                this.userbase.Visibility = Visibility.Visible;
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
-            this.userbase.Visibility = Visibility.Visible;
 
 
         }
@@ -95,22 +101,35 @@ namespace bank
 
         private void close_Click(object sender, RoutedEventArgs e)
         {
-            var json = File.ReadAllText(path + "/settings.json");
-            var settings = JsonSerializer.Deserialize<Settings>(json);
-            settings.IsClose = true;
-            var tempjson = JsonSerializer.Serialize(settings);
-            File.WriteAllText(path + "/settings.json", tempjson);
-            MessageBox.Show("All done");
+            try
+            {
+                var json = File.ReadAllText(path + "/settings.json");
+                var settings = JsonSerializer.Deserialize<Settings>(json);
+                settings.IsClose = true;
+                var tempjson = JsonSerializer.Serialize(settings);
+                File.WriteAllText(path + "/settings.json", tempjson);
+                MessageBox.Show("All done");
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void open_Click(object sender, RoutedEventArgs e)
         {
-            var json = File.ReadAllText(path + "/settings.json");
-            var settings = JsonSerializer.Deserialize<Settings>(json);
-            settings.IsClose = false;
-            var tempjson = JsonSerializer.Serialize(settings);
-            File.WriteAllText(path + "/settings.json", tempjson);
-            MessageBox.Show("All done");
+            try
+            {
+                var json = File.ReadAllText(path + "/settings.json");
+                var settings = JsonSerializer.Deserialize<Settings>(json);
+                settings.IsClose = false;
+                var tempjson = JsonSerializer.Serialize(settings);
+                File.WriteAllText(path + "/settings.json", tempjson);
+                MessageBox.Show("All done");
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
         }
 
         private void setmusic_Click(object sender, RoutedEventArgs e)

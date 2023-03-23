@@ -63,8 +63,16 @@ namespace bank
         {
             string pathin = txtUser.Text;
             string name = txtName.Text;
-            File.Move(pathin + "/"+ name, path + "/menu.wav", true);
+            try
+            {
+
+                File.Move(pathin + "/" + name, path + "/menu.wav", true);
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             this.Close();
+
         }
 
         
